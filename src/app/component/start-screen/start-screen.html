@@ -1,0 +1,46 @@
+<section style="position: relative; min-height: 100vh; background-color: #1a2e1a; overflow: hidden;">
+
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 0.15;">
+        <img src="images/Papayoo.webp" 
+             style="max-width: 400px; width: 90%; height: auto;" 
+             alt="Papayoo Logo">
+    </div>
+
+    <div style="position: relative; z-index: 10; min-height: 100vh; padding: 1rem;">
+        <h1 class="text-white text-3xl font-bold text-center mb-6">Papayoo Score Counter</h1>
+
+        <div id="player-preview-list" class="text-white text-lg text-center mb-6">
+            <p *ngIf="gameService.players.length === 0" class="italic">No players added yet...</p>
+            <ul class="list-none">
+                <li *ngFor="let p of gameService.players" class="font-bold border-b border-green-600 py-1">
+                    {{ p.name }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="flex justify-around gap-4">
+            <button (click)="onAddPlayerClick()" 
+                    type="button" 
+                    class="border-2 border-black rounded-lg text-white bg-amber-400 p-2 active:scale-95 transition-transform"
+                    [disabled]="gameService.players.length >= 8">
+                Add Player
+            </button>
+            
+            <button type="button"
+                    (click)="onStartGameClick()"
+                    [disabled]="gameService.players.length < 3 || gameService.players.length > 8"
+                    [class.opacity-50]="gameService.players.length < 3"
+                    [class.cursor-not-allowed]="gameService.players.length < 3"
+                    class="border-2 border-black rounded-lg text-white bg-amber-400 p-2 active:scale-95 transition-transform">
+                Start Game
+            </button>
+        </div>
+
+        <p *ngIf="gameService.players.length < 3" class="text-white text-center text-sm opacity-80 mt-4">
+            (At least 3 players are required to start the game)
+        </p>
+        <p *ngIf="gameService.players.length >= 8" class="text-white text-center text-sm opacity-80 mt-4">
+            (A maximum of 8 players can be added)
+        </p>
+    </div>
+</section>

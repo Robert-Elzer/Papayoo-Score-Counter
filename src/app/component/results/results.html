@@ -1,0 +1,35 @@
+<section class="relative bg-blue-900 min-w-full min-h-screen p-4 overflow-y-auto">
+
+    <div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none p-6">
+        <img src="images/Papayoo.webp"
+        class="max-w-md w-full opacity-15 filter brightness-110"
+        alt="Papayoo Logo">
+    </div>
+
+    <div class="relative z-10 flex flex-col gap-6 max-w-lg mx-auto">
+    <h1 class="text-white text-4xl text-center mb-6 font-bold">Final Scores</h1>
+
+    <div id="result-list" class="w-full max-w-md bg-white rounded-lg p-6 shadow-xl mb-8">
+        <div *ngFor="let player of sortedPlayers; let i = index"
+        class="flex justify-between items-center border-b last:border-0 py-3 text-xl">
+
+        <div class="flex items-center gap-3">
+            <span class="font-bold text-gray-500">#{{ i + 1 }}</span>
+            <span [class.text-green-600]="i === 0" class="font-semibold">
+                {{ player.name }}
+                <span *ngIf="i === 0">🏆</span>
+            </span>
+        </div>
+
+        <span class="font-mono font-bold">{{ player.totalScore }} points</span>
+        </div>
+    </div>
+
+    <button
+    type="button"
+    (click)="restartGame()"
+    class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-4 px-8 text-xl font-bold active:bg-amber-500 transition-colors">       
+        Play again
+    </button>
+</div>
+</section>

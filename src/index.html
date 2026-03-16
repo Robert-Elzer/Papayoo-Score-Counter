@@ -6,8 +6,52 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <section id="start-screen" class=" bg-green-700  min-w-full min-h-screen flex flex-col ">
+      <h1 class="text-red-500 text-4xl text-center">Papayoo Score Counter</h1>
+    
+      <div id="player-preview-list" class="text-white text-lg text-center mb-6">
+        <p class="italic">No players added yet...</p>
+      </div>
+    
+      <div class="flex justify-around gap-4">
+        <button id="add-player-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2">Add Player</button>
+        <button id="start-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2 ">Start Game</button>
+      </div>    
+    </section>
+    
+    <section id="input-screen" class="bg-blue-600 min-w-full min-h-screen flex flex-col p-4 hidden">
+      <form id="add-player-form" class="flex flex-col gap-4">
+        <label class="text-white text-xl text-center ">Enter Player Name</label>
+        <input type="text" id="player-name-input" class="border-solid border-2 border-black rounded-lg text-white block m-auto ">
+        <div class="flex justify-around">
+          <button id="cancel-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2">Cancel</button>
+          <button type="submit" id="confirm-player-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2">Confirm Player</button>
+        </div>    
+      </form>  
+    </section>
+    
+    <section id="score-screen" class="bg-blue-600 min-w-full min-h-screen hidden">
+      <h2 class="text-white text-2xl text-center mb-4">Round <span id="round-number">1</span></h2>
+      <div id="players-container" class="flex flex-col items-center gap-4 mb-6"></div>
+      <div class="flex justify-around">
+        <button id="next-round-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2">Submit Scores</button>
+        <button id="finish-game-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2">End Game & See Results</button>
+      </div>  
+    </section>
+    
+    <section id="result-screen" class="bg-green-800 min-w-full min-h-screen p-4 hidden">
+      <h1 class="text-white text-4xl text-center mb-6">Final Scores</h1>
+      <div id="result-list">
+    
+      </div>
+      <button id="restart-button" class="border-solid border-2 border-black rounded-lg text-white bg-amber-400 p-2 block m-auto">Play Again</button>
+    </section>
+  </app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>

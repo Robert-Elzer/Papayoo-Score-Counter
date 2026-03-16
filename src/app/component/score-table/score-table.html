@@ -1,0 +1,85 @@
+<section class="relative min-w-full min-h-screen p-4 overflow-hidden bg-[#1a2e1a]">
+    
+    <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none p-6">
+        <img src="images/Papayoo.webp" class="w-11/12 max-w-md opacity-15 object-contain grayscale-20" alt="Papayoo Logo">
+    </div>
+
+    <div class="relative z-10 flex flex-col gap-4 max-w-lg mx-auto">
+        <h2 class="text-white text-2xl text-center mb-4">
+            Round {{ gameService.currentRound }}
+        </h2>
+
+        <form [formGroup]="scoreForm" (ngSubmit)="submitRound($event)">
+            <div id="players-container" class="flex flex-col items-center gap-4 mb-6">
+                <div *ngFor="let player of gameService.players" class="flex flex-col w-full max-w-xs">
+                    <label class="text-white font-bold text-center">{{ player.name }}</label>
+                    <input type="number" [formControlName]="player.name" class="p-2 rounded border-2 border-black text-white bg-black/20" inputmode="numeric">
+                </div>
+            </div>
+
+        <div *ngIf="scoreForm" class="mb-4">
+            <p class="text-sm text-center font-bold" 
+            [class.text-green-400]="isValidTotal" 
+            [class.text-red-500]="!isValidTotal">
+        
+            Current Total: {{ currentTotal }}
+        
+            <ng-container *ngIf="!isValidTotal">
+            (Must be 210, 250, 290, 330 or 370)
+            </ng-container>
+            </p>
+        </div>
+
+            <div class="flex flex-col gap-4">
+                <button type="submit" [disabled]="!isValidTotal" class="border-2 border-black rounded-lg text-white bg-amber-400 p-2 w-full font-bold">
+                    Submit Round Scores
+                </button>
+                <button type="button" (click)="finishGame()" class="border-2 border-black rounded-lg text-red-700 bg-white p-2 w-full font-bold">
+                    End Game & See Results
+                </button>
+            </div>
+        </form>
+
+        <button type="button" (click)="toggleHistory()" class="mt-4 p-3 rounded-lg bg-white/10 text-amber-400 border border-amber-400 font-bold">
+            {{ isHistoryOpen ? 'Close History ✕' : '📊 View Score History' }}
+        </button>
+    </div>
+
+    <div *ngIf="isHistoryOpen" class="modal-overlay" (click)="toggleHistory()">
+        <div class="history-drawer" (click)="$event.stopPropagation()">
+            
+            <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
+                <div class="flex items-center gap-3">
+                    <h3 class="text-white text-lg font-bold">Score History</h3>
+                    <button *ngIf="gameService.players && gameService.players[0]?.roundScores?.length" (click)="confirmUndo()" class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/50 px-2 py-1 rounded">
+                        Undo Last
+                    </button>
+                </div>
+                <button (click)="toggleHistory()" class="text-white/50 text-2xl">&times;</button>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-white/20">
+                <table class="min-w-full bg-white/5 text-white text-sm">
+                    <thead>
+                        <tr class="bg-black/40">
+                            <th class="p-2 sticky-left">Rd</th>
+                            <th *ngFor="let p of gameService.players" class="p-2 text-center">{{ p.name }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let round of gameService.players[0]?.roundScores; let i = index" class="border-b border-white/5">
+                            <td class="p-2 font-bold text-amber-400 text-center sticky-left">{{ i + 1 }}</td>
+                            <td *ngFor="let p of gameService.players" class="p-2 text-center">{{ p.roundScores[i] }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-black/40 font-bold">
+                        <tr>
+                            <td class="p-2 text-center sticky-left">Total</td>
+                            <td *ngFor="let p of gameService.players" class="p-2 text-center text-green-300">{{ p.totalScore }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
